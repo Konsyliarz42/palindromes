@@ -1,24 +1,30 @@
+import re
+
 def is_palindromes(string):
-    string = string.strip()
     string = string.lower()
+    string = ''.join(char for char in string if char not in '.,;:!?-     ')
 
     check_letters = int(len(string) / 2)
     
-    if len(string) % 2 == 0:
-        if string[:check_letters] == string[:check_letters -1:-1]:
-            return True
-        else:
-            return False
+    if string[:check_letters] == string[:-check_letters-1:-1]:
+        return True
     else:
-        if string[:check_letters] == string[:check_letters:-1]:
-            return True
-        else:
-            return False
+        return False
 
 #================================================================
 
-strings = ['kajak', 'potop', ' kość', 'kartka', ' zaraz ', 'mars', 'Anna']
+strings = { 'kajak': True, 
+            'potop': True,
+            ' kość': False,
+            'kartka': False,
+            ' zaraz ': True,
+            'mars': False,
+            'Anna': True,
+            'Może jutro ta dama sama da tortu jeżom.': True }
 
 for str_ in strings:
-    print('-' *16)
-    print(f"{str_:<8}|", is_palindromes(str_))
+    if strings[str_] != is_palindromes(str_):
+        print("Bad:", str_)
+        break
+    else:
+        print("Good:", str_)
